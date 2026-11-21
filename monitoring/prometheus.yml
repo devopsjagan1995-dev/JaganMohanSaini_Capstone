@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: support-system
+    static_configs:
+      - targets: ["localhost:8000"]
+        labels:
+          service: cloudserve-support-router
+
+# The API exposes Prometheus text at http://localhost:8000/metrics
+# when it is started with: python -m uvicorn src.api:app --port 8000

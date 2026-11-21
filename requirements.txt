@@ -1,0 +1,12 @@
+# Direct dependencies. Installed and tested with the included .venv on Python 3.14.
+# The older pins in 06_Configuration/requirements.txt do not ship wheels for this
+# Python, so a reviewer should install this file instead.
+
+fastapi==0.162.6
+uvicorn==0.54.0
+pydantic==2.14.3
+python-dotenv==1.2.4
+prometheus-client==0.26.0
+pytest==9.2.0
+httpx==0.28.1
+fpdf2==2.9.0

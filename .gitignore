@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+storage/*.db
+storage/*.json
+evaluation/results/
+*.egg-info/
+.venv/
