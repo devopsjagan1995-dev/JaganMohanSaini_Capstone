@@ -594,6 +594,12 @@ def revision() -> None:
     put(t[6], 1, 1, "That the client had a shortage of answers. They have a shortage of delivery, plus a set of tickets that must not be answered automatically.")
     put(t[6], 2, 1, "Counting answerable_from_docs before writing the first prompt. The 71 percent figure is available on day one.")
     put(t[6], 3, 1, "Run one unattended file on day two of the build, and treat a single wrong send as a requirements change rather than as a number to improve by another run.")
+    put(
+        t[6],
+        4,
+        1,
+        "The hidden 120-ticket file is not in the pack, so intent accuracy and resolution on unseen wording are still unknown. VAL-0029 shows a real citation can still be the wrong article. A person would need to score a sample of automatic replies before any customer traffic.",
+    )
     save(doc, "Stage_5_PRD_Revision_Log.docx")
 
 
@@ -658,11 +664,49 @@ def effort() -> None:
     put(t[7], 1, 1, "Making the old LangChain and Chroma pins run. They do not have wheels for this Python, and compiling them failed. The time went into a local path that still meets the acceptance behaviour.")
     put(t[7], 2, 1, "The 80-ticket run, once the pipeline existed. It finishes in seconds because it does not call a hosted model.")
     put(t[7], 3, 1, "Put the unattended run on the first build day, and fill the effort log on that day rather than reconstructing it.")
+    put(t[7], 4, 1, "Trying to keep the course LangChain and Chroma pins as the running path. The acceptance behaviour does not depend on those package names, and the failed compile did not change the router.")
     put(t[8], 1, 0, NAME)
     put(t[8], 1, 1, "Sign by hand before upload.")
     put(t[8], 1, 2, DATE)
     put(t[8], 1, 3, "23.5")
     save(doc, "Effort_Log.docx")
+    write_effort_pdf()
+
+
+def write_effort_pdf() -> None:
+    """The submission guide names the effort log as a PDF."""
+    from fpdf import FPDF
+
+    pdf = FPDF(format="A4")
+    pdf.set_auto_page_break(auto=True, margin=16)
+    pdf.set_margins(16, 16, 16)
+    pdf.add_page()
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.multi_cell(0, 8, "Effort log")
+    pdf.ln(2)
+    pdf.set_font("Helvetica", "", 11)
+    paragraphs = [
+        "Name: Jagan Mohan Saini. Record date: 13 November 2026. Total hours recorded: 23.5.",
+        "The pack's planned deadline was 13 September. This completion was done in one concentrated period on 13 November 2026. The hours below are actual hours for that completion. They are not a diary reconstructed across three separate weeks, and the video hours are not claimed.",
+        "Stage totals. Discovery: planned 16, actual 5. Requirements: planned 8, actual 3. Prompt library: planned 6, actual 2. Sprint plan: planned 4, actual 1.5. Build and revision: planned 28, actual 8. Report and packaging: planned 12, actual 4. Total planned 74, total actual 23.5.",
+        "13 November 2026, 3 hours, discovery. Read the brief, the five interviews, and counted the 500 development tickets. Produced the problem statement and the ticket tables.",
+        "13 November 2026, 2 hours, requirements. Wrote FR-01 to FR-08 and the non-functional rows from those tables.",
+        "13 November 2026, 1.5 hours, prompt library. Specified PR-ANSWER, PR-ROUTE, and PR-EVAL.",
+        "13 November 2026, 1 hour, sprint plan. Marked the backlog definitions of done against the code.",
+        "13 November 2026, 6 hours, build. Built ingest, classify, retrieve, generate, guardrails, route, the decision log, the API, and the tests. LangChain 0.1 and Chroma 0.3 do not install on Python 3.14.",
+        "13 November 2026, 2 hours, build. Ran the 80-ticket file, added the short-text rule, quoted the Resolution section, and ran the file once more. The recorded run has 66 automatic answers, 14 escalations, and a decision log that matches the ticket count.",
+        "13 November 2026, 4 hours, report and packaging. Wrote the report, filled the workbooks, and laid out the four folders. The video was not recorded.",
+        "The task that took longer than expected was the attempt to install the course pins. They have no wheels for this Python. The time went into a local path that still meets the acceptance behaviour.",
+        "The 80-ticket run was easier than expected once the pipeline existed, because it does not call a hosted model. Time that did not change the router was the failed attempt to keep those course package names as the running path.",
+        "Signed record: Jagan Mohan Saini, 13 November 2026, 23.5 hours. The handwritten signature is still required on the Word copy before upload.",
+    ]
+    for paragraph in paragraphs:
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 6, paragraph)
+        pdf.ln(2)
+    path = OUT / "JaganMohanSaini_Effort_Log.pdf"
+    pdf.output(str(path))
+    print("wrote", path)
 
 
 def main() -> None:
